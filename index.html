@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wycieczka do Niemiec | 5-dniowy Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Karla:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F1E8;
+            --dark: #2C2C2C;
+            --accent: #B4926F;
+            --light-accent: #D4C4A8;
+            --text-gray: #666666;
+        }
+
+        body {
+            font-family: 'Karla', sans-serif;
+            background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2C2C2C 0%, #4A4A4A 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #2C2C2C 0%, #4A4A4A 50%, #2C2C2C 100%);
+            opacity: 0.9;
+            animation: slowZoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease-out 0.3s backwards;
+        }
+
+        .route-info {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            animation: fadeInUp 1.2s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .intro-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            background-color: white;
+        }
+
+        .intro-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .intro-section p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            line-height: 1.9;
+        }
+
+        .day-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin: 0;
+            min-height: 70vh;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .day-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .day-section:nth-child(even) {
+            direction: rtl;
+        }
+
+        .day-section:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .day-image {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #B4926F 0%, #8B7355 100%);
+            transition: transform 0.6s ease;
+        }
+
+        .day-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .day-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .day-section:hover .day-image img {
+            transform: scale(1.05);
+        }
+
+        .day-content {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: white;
+        }
+
+        .day-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .day-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .day-route {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .day-description {
+            margin-bottom: 1.5rem;
+        }
+
+        .day-description h4 {
+            font-family: 'Karla', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .day-description p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .highlights {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .highlights li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        .highlights li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .practical-info {
+            background-color: var(--dark);
+            color: white;
+            padding: 6rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .practical-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-item h3 {
+            font-family: 'Karla', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--light-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .info-item p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        .alternative-route {
+            background-color: white;
+            padding: 6rem 2rem;
+        }
+
+        .alternative-route h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .alternative-route .subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .alt-destinations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .alt-card {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid rgba(180, 146, 111, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .alt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .alt-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .alt-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 968px) {
+            .day-section {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .day-section:nth-child(even) {
+                direction: ltr;
+            }
+
+            .day-image {
+                height: 400px;
+            }
+
+            .day-content {
+                padding: 2rem;
+            }
+
+            .intro-section {
+                padding: 4rem 2rem;
+            }
+
+            .practical-info {
+                padding: 4rem 2rem;
+            }
+
+            .alternative-route {
+                padding: 4rem 2rem;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            color: white;
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Niemcy</h1>
+            <div class="hero-subtitle">5-Dniowa Podróż</div>
+            <div class="route-info">
+                Poznań → Saksonia → Turyngia → Góry Harz → Poznań
+                <br>
+                <small style="opacity: 0.7; font-size: 0.9rem;">ok. 1000-1100 km</small>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Intro -->
+    <section class="intro-section">
+        <div class="container">
+            <h2>Podróż przez Historię i Naturę</h2>
+            <p>
+                Pięciodniowa wycieczka łącząca barokową architekturę Saksonii, średniowieczne miasta 
+                wpisane na listę UNESCO oraz malownicze Góry Harz. Przygotujcie się na spektakularne 
+                widoki, urokliwe miasteczka i niezapomniane wrażenia.
+            </p>
+        </div>
+    </section>
+
+    <!-- Day 1 -->
+    <section class="day-section">
+        <div class="day-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <img src="bastei.png" alt="Bastei Bridge" loading="lazy">
+        </div>
+        <div class="day-content">
+            <div class="day-number">Dzień Pierwszy / Wtorek</div>
+            <h3 class="day-title">Skalne Miasta i Barok</h3>
+            <div class="day-route">Poznań → Bastei → Drezno (ok. 4h 30min)</div>
+            
+            <div class="day-description">
+                <h4>Południe</h4>
+                <p>
+                    <strong>Bastei</strong> – Szwajcaria Saksońska. Słynny kamienny most zawieszony między 
+                    piaskowcowymi skałami oferuje spektakularne widoki. Nie zapomnijcie o ruinach zamku Neurathen.
+                </p>
+
+                <h4>Wieczór</h4>
+                <p>
+                    <strong>Drezno</strong> – Spacer po starym mieście przy zachodzie słońca. 
+                    "Balkon Europy" nad Łabą zachwyca o każdej porze dnia.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 2 -->
+    <section class="day-section">
+        <div class="day-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <img src="drezno.png" alt="Dresden Frauenkirche" loading="lazy">
+        </div>
+        <div class="day-content">
+            <div class="day-number">Dzień Drugi / Środa</div>
+            <h3 class="day-title">Florencja nad Łabą</h3>
+            <div class="day-route">Dzień stacjonarny w Dreźnie</div>
+            
+            <div class="day-description">
+                <ul class="highlights">
+                    <li><strong>Zwinger</strong> – Pałacowy kompleks barokowy (dziedziniec darmowy)</li>
+                    <li><strong>Frauenkirche</strong> – Kościół Marii Panny (wejście na kopułę obowiązkowe)</li>
+                    <li><strong>Fürstenzug</strong> – Największy na świecie obraz z porcelanowych płytek</li>
+                    <li><strong>Neustadt</strong> – Alternatywna dzielnica ze street artem i artystycznymi podwórkami</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 3 -->
+    <section class="day-section">
+        <div class="day-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <img src="lipsk.png" alt="Leipzig" loading="lazy">
+        </div>
+        <div class="day-content">
+            <div class="day-number">Dzień Trzeci / Czwartek</div>
+            <h3 class="day-title">Porcelana i "Mały Berlin"</h3>
+            <div class="day-route">Drezno → Miśnia → Lipsk (ok. 1h 30min)</div>
+            
+            <div class="day-description">
+                <h4>Rano</h4>
+                <p>
+                    <strong>Miśnia (Meißen)</strong> – Urocze miasteczko słynące z pierwszej w Europie porcelany. 
+                    Wzgórze zamkowe Albrechtsburg oferuje piękne widoki.
+                </p>
+
+                <h4>Popołudnie</h4>
+                <p>
+                    <strong>Lipsk</strong> – "Nowy Berlin" z luźną atmosferą. Rynek, Kościół św. Tomasza (Bach) 
+                    oraz gigantyczny Pomnik Bitwy Narodów – Völkerschlachtdenkmal.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 4 -->
+    <section class="day-section">
+        <div class="day-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+            <img src="quedlinburg.png" alt="Quedlinburg" loading="lazy">
+        </div>
+        <div class="day-content">
+            <div class="day-number">Dzień Czwarty / Piątek</div>
+            <h3 class="day-title">Wrota do Gór Harz</h3>
+            <div class="day-route">Lipsk → Quedlinburg → Thale (ok. 1h 30min)</div>
+            
+            <div class="day-description">
+                <h4>Rano</h4>
+                <p>
+                    <strong>Quedlinburg</strong> – Absolutna perła UNESCO. Ponad 1300 domów szachulcowych, 
+                    jak wyjęte z baśni braci Grimm. Spacer na wzgórze zamkowe obowiązkowy.
+                </p>
+
+                <h4>Popołudnie</h4>
+                <p>
+                    <strong>Thale</strong> – Kolejka na Hexentanzplatz (Plac Tańca Czarownic). 
+                    Legendy o czarownicach i piękny widok na wąwóz rzeki Bode.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 5 -->
+    <section class="day-section">
+        <div class="day-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <img src="wernigerode.png" alt="Wernigerode" loading="lazy">
+        </div>
+        <div class="day-content">
+            <div class="day-number">Dzień Piąty / Sobota</div>
+            <h3 class="day-title">Góry, Zamki i Mosty Wiszące</h3>
+            <div class="day-route">Wernigerode → Titan RT</div>
+            
+            <div class="day-description">
+                <h4>Rano</h4>
+                <p>
+                    <strong>Wernigerode</strong> – Bajkowe miasteczko z jednym z najpiękniejszych ratuszy w Niemczech. 
+                    Zamek Wernigerode góruje nad miastem.
+                </p>
+
+                <h4>Południe</h4>
+                <p>
+                    <strong>Titan RT</strong> – Jeden z najdłuższych mostów wiszących dla pieszych na świecie. 
+                    Wisi nad gigantyczną tamą Rappbode. Adrenalina gwarantowana!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 6 -->
+    <section class="day-section">
+        <div class="day-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+            <img src="poczdam.png" alt="Sanssouci Palace Potsdam" loading="lazy">
+        </div>
+        <div class="day-content">
+            <div class="day-number">Dzień Szósty / Niedziela</div>
+            <h3 class="day-title">Powrót i Ogród Europy</h3>
+            <div class="day-route">Wernigerode → Poczdam → Poznań (ok. 4-5h)</div>
+            
+            <div class="day-description">
+                <h4>Przystanek</h4>
+                <p>
+                    <strong>Poczdam</strong> – Park Sanssouci z pałacem Fryderyka Wielkiego i tarasowymi ogrodami. 
+                    Idealne zwieńczenie wycieczki.
+                </p>
+
+                <h4>Alternatywa</h4>
+                <p>
+                    <strong>Spreewald (Lubbenau)</strong> – "Niemiecka Wenecja". Spływ łódką po kanałach 
+                    i degustacja słynnych ogórków szprewaldskich.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alternative Route -->
+    <section class="alternative-route">
+        <div class="container">
+            <h2>Alternatywna Trasa Północna</h2>
+            <p class="subtitle">Morze i ceglany gotyk zamiast gór</p>
+            
+            <div class="alt-destinations">
+                <div class="alt-card">
+                    <h3>Schwerin</h3>
+                    <p>Zamek na wodzie wyglądający jak z Disneya</p>
+                </div>
+                <div class="alt-card">
+                    <h3>Lübeck</h3>
+                    <p>Stolica marcepanu z piękną bramą Holsztyńską</p>
+                </div>
+                <div class="alt-card">
+                    <h3>Hamburg</h3>
+                    <p>Miniatur Wunderland, port i dzielnica spichlerzy</p>
+                </div>
+                <div class="alt-card">
+                    <h3>Lüneburg</h3>
+                    <p>Piękne hanzeatyckie miasto</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practical Info -->
+    <section class="practical-info">
+        <div class="container">
+            <h2>Informacje Praktyczne</h2>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <h3>Umweltzone</h3>
+                    <p>
+                        Drezno, Lipsk, Magdeburg wymagają zielonej naklejki ekologicznej (5-10 EUR). 
+                        Bez niej mandat to 80-100 EUR. Naklejkę można kupić na stacjach TÜV/Dekra w Niemczech 
+                        lub w PZM przed wyjazdem.
+                    </p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>Autostrady</h3>
+                    <p>
+                        W Niemczech autostrady są darmowe dla aut osobowych. 
+                        Ciesz się jazdą bez vigniety!
+                    </p>
+                </div>
+                
+                <div class="info-item">
+                    <h3>Płatności</h3>
+                    <p>
+                        W małych miasteczkach w Górach Harz i piekarniach nadal zdarza się "Nur Bargeld" 
+                        (tylko gotówka). Warto mieć euro w portfelu.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Dobrej podróży! 🗺️</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.day-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
